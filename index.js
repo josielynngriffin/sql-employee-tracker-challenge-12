@@ -84,8 +84,10 @@ function init() {
     .then(data => {
         switch(data.startPrompt) {
             case 'View all departments':
+                viewDepartments();
                 break;
             case 'View all roles':
+                viewRoles();
                 break;
             case 'View all employees':
                 viewEmployees();
@@ -103,4 +105,27 @@ function init() {
     //switch case based on choices
 };
 
-//init();
+function viewDepartments() {
+    db.query("SELECT * FROM department", function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      init();
+    })
+  };
+
+  function viewRoles() {
+    db.query("SELECT * FROM roles", function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      init();
+    })
+  };
+
+function viewEmployees() {
+    db.query("SELECT * FROM employees", function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      init();
+    })
+  };
+init();
