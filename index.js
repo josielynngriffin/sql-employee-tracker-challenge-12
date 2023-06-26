@@ -20,7 +20,7 @@ const questions = ([
         type: 'list',
         message:'Which action would you like to do?',
         name:'startPrompt',
-        choices: ['View all departments', 'View all roles', 'View all employees','Add a department', 'Add a role', 'Add an employee', "Update an employee's role"]
+        choices: ['View all departments', 'View all roles', 'View all employees','Add a department', 'Add a role', 'Add an employee', "Update an employee's role", "None - exit now!"]
 
     }
 ])
@@ -103,6 +103,9 @@ function init() {
                 break;
             case "Update an employee's role":
                 updateEmployeeRole();
+                break;
+            case "None - exit now!":
+                db.end();
                 break;
         }
     })
