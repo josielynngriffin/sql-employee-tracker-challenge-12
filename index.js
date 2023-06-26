@@ -68,10 +68,10 @@ const addEmployeePrompt = [{
     message: "Enter the id of new employee's manager:"
 }];
 
-const updateRole = [{
+const updateRolePrompt = [{
     type:'input',
-    name: 'firstName',
-    message: "Whose role do you wish to update? Enter the employee's first name"
+    name: 'id',
+    message: "Whose role do you wish to update? Enter the employee's id:"
 }, 
 {
     type:'input',
@@ -102,6 +102,7 @@ function init() {
                 addEmployee();
                 break;
             case "Update an employee's role":
+                updateEmployeeRole();
                 break;
         }
     })
@@ -141,7 +142,7 @@ function addDepartment() {
             init();
         })
     })
-}
+};
 
 function addRole() {
     inquirer.prompt(addRolePrompt)
@@ -152,7 +153,8 @@ function addRole() {
             init();
         })
     })
-}
+};
+
 function addEmployee() {
     inquirer.prompt(addEmployeePrompt)
     .then(body => {
@@ -162,5 +164,17 @@ function addEmployee() {
             init();
         })
     })
+};
+
+function updateEmployeeRole() {
+    inquirer.prompt(updateRolePrompt)
+  .then(body => {
+
+    db.promise().query(`UPDATE employees SET role_id = ? WHERE id = ?`, [body.role_id, body.id])
+    .then(function ([body]) {
+      console.table(body);
+      init();
+    })
+  })
 }
 init();
