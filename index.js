@@ -25,13 +25,13 @@ const questions = ([
     }
 ])
 
-const addDepartment =[{
+const addDepartmentPrompt =[{
     type: 'input',
-    name: 'departmentName',
+    name: 'name',
     message: 'Enter new department name:'
 }];
 
-const addRole =[{
+const addRolePrompt =[{
     type:'input',
     name:'title',
     message: 'Enter title of new role:'
@@ -47,14 +47,14 @@ const addRole =[{
     message: 'Enter corresponding department id for role:'
 }];
 
-const addEmployee = [{
+const addEmployeePrompt = [{
     type:'input',
-    name: 'firstName',
+    name: 'first_name',
     message: "Enter new employee's first name:"
 },
 {
     type:'input',
-    name: 'lastName',
+    name: 'last_name',
     message: "Enter new employee's last name:"
 },
 {
@@ -93,10 +93,13 @@ function init() {
                 viewEmployees();
                 break;
             case 'Add a department':
+                addDepartment();
                 break;
             case 'Add a role':
+                addRole();
                 break;
             case 'Add an employee':
+                addEmployee();
                 break;
             case "Update an employee's role":
                 break;
@@ -128,4 +131,36 @@ function viewEmployees() {
       init();
     })
   };
+
+function addDepartment() {
+    inquirer.prompt(addDepartmentPrompt)
+    .then(body => {
+        db.promise().query("INSERT INTO department SET ?", body)
+        .then(function([body]) {
+            console.table(body);
+            init();
+        })
+    })
+}
+
+function addRole() {
+    inquirer.prompt(addRolePrompt)
+    .then(body => {
+        db.promise().query("INSERT INTO roles SET ?", body)
+        .then(function([body]) {
+            console.table(body);
+            init();
+        })
+    })
+}
+function addEmployee() {
+    inquirer.prompt(addEmployeePrompt)
+    .then(body => {
+        db.promise().query("INSERT INTO employees SET ?", body)
+        .then(function([body]) {
+            console.table(body);
+            init();
+        })
+    })
+}
 init();
